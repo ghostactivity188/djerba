@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- GitHub Pages Ready: deploy this folder as-is to GitHub Pages -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -456,18 +457,22 @@
           <div class="reel-progress-seg active" id="prog-0"><div class="reel-progress-seg-fill"></div></div>
           <div class="reel-progress-seg" id="prog-1"><div class="reel-progress-seg-fill"></div></div>
           <div class="reel-progress-seg" id="prog-2"><div class="reel-progress-seg-fill"></div></div>
+          <div class="reel-progress-seg" id="prog-3"><div class="reel-progress-seg-fill"></div></div>
+          <div class="reel-progress-seg" id="prog-4"><div class="reel-progress-seg-fill"></div></div>
         </div>
         <div class="reel-dots">
           <div class="reel-dot active" data-idx="0"></div>
           <div class="reel-dot" data-idx="1"></div>
           <div class="reel-dot" data-idx="2"></div>
+          <div class="reel-dot" data-idx="3"></div>
+          <div class="reel-dot" data-idx="4"></div>
         </div>
 
         <div class="reel-viewport" id="reel-viewport">
 
-          <!-- Reel 1 -->
+          <!-- Reel 1: Tour de l'Île – houms souk -->
           <div class="reel-slide" id="reel-0">
-            <video id="vid-0" src="videos/tour_ile.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <video id="vid-0" src="tour de lile/houms souk.mp4" loop muted playsinline style="display:none" preload="none"></video>
             <div class="reel-placeholder" id="ph-0" style="background-image:url('images/tour_ile.jpg')">
               <div class="reel-placeholder-overlay"></div>
               <div class="reel-placeholder-icon">▶️</div>
@@ -493,9 +498,10 @@
             </div>
           </div>
 
-          <!-- Reel 2 -->
+          <!-- Reel 2: Bateaux Pirates -->
           <div class="reel-slide" id="reel-1">
             <video id="vid-1" src="videos/bateaux_pirates.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <!-- Drop your pirate boat video at: videos/bateaux_pirates.mp4 -->
             <div class="reel-placeholder" id="ph-1" style="background-image:url('images/bateaux_pirates.jpg')">
               <div class="reel-placeholder-overlay"></div>
               <div class="reel-placeholder-icon">▶️</div>
@@ -521,9 +527,10 @@
             </div>
           </div>
 
-          <!-- Reel 3 -->
+          <!-- Reel 3: Excursion Désert -->
           <div class="reel-slide" id="reel-2">
             <video id="vid-2" src="videos/excursion_desert.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <!-- Drop your desert video at: videos/excursion_desert.mp4 -->
             <div class="reel-placeholder" id="ph-2" style="background-image:url('images/excursion_desert.jpg')">
               <div class="reel-placeholder-overlay"></div>
               <div class="reel-placeholder-icon">▶️</div>
@@ -543,6 +550,63 @@
                 <span data-i18n="sound">Sound</span>
               </button>
               <button class="reel-action-btn" onclick="bookWhatsApp('Excursion D\u00e9sert')">
+                <div class="btn-circle">💬</div>
+                <span data-i18n="book_short">Book</span>
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Reel 4: Tour de l'Île – Djerba hood -->
+          <div class="reel-slide" id="reel-3">
+            <video id="vid-3" src="tour de lile/Djerba hood.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <div class="reel-placeholder" id="ph-3" style="background-image:url('images/tour_ile.jpg')">
+              <div class="reel-placeholder-overlay"></div>
+              <div class="reel-placeholder-icon">▶️</div>
+            </div>
+            <div class="reel-overlay"></div>
+            <div class="reel-info">
+              <div class="reel-activity-tag" data-i18n="act1_tag">Island Tour</div>
+              <div class="reel-title" data-i18n="reel4_title">Djerba — L'Île</div>
+              <div class="reel-desc" data-i18n="reel4_desc">The colours and soul of Djerba up close.</div>
+              <button class="reel-book-btn" onclick="bookWhatsApp('Tour de l\u0027Île')" id="reel-book-3">
+                <span>💬</span> <span data-i18n="book_short">Book Now</span>
+              </button>
+            </div>
+            <div class="reel-actions">
+              <button class="reel-action-btn" onclick="toggleMute(3)" id="mute-btn-3">
+                <div class="btn-circle" id="mute-icon-3">🔇</div>
+                <span data-i18n="sound">Sound</span>
+              </button>
+              <button class="reel-action-btn" onclick="bookWhatsApp('Tour de l\u0027Île')">
+                <div class="btn-circle">💬</div>
+                <span data-i18n="book_short">Book</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Reel 5: Tour de l'Île – Guellala -->
+          <div class="reel-slide" id="reel-4">
+            <video id="vid-4" src="tour de lile/guellala.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <div class="reel-placeholder" id="ph-4" style="background-image:url('images/tour_ile.jpg')">
+              <div class="reel-placeholder-overlay"></div>
+              <div class="reel-placeholder-icon">▶️</div>
+            </div>
+            <div class="reel-overlay"></div>
+            <div class="reel-info">
+              <div class="reel-activity-tag" data-i18n="act1_tag">Island Tour</div>
+              <div class="reel-title" data-i18n="reel5_title">Guellala Village</div>
+              <div class="reel-desc" data-i18n="reel5_desc">Ancient pottery and Berber traditions await.</div>
+              <button class="reel-book-btn" onclick="bookWhatsApp('Tour de l\u0027Île')" id="reel-book-4">
+                <span>💬</span> <span data-i18n="book_short">Book Now</span>
+              </button>
+            </div>
+            <div class="reel-actions">
+              <button class="reel-action-btn" onclick="toggleMute(4)" id="mute-btn-4">
+                <div class="btn-circle" id="mute-icon-4">🔇</div>
+                <span data-i18n="sound">Sound</span>
+              </button>
+              <button class="reel-action-btn" onclick="bookWhatsApp('Tour de l\u0027Île')">
                 <div class="btn-circle">💬</div>
                 <span data-i18n="book_short">Book</span>
               </button>
@@ -700,9 +764,9 @@
   });
 
   // ── REEL LOGIC ───────────────────────────────────────────────────
-  const REEL_COUNT = 3;
+  const REEL_COUNT = 5;
   let currentReel = 0;
-  const muteStates = [true, true, true];
+  const muteStates = [true, true, true, true, true];
 
   function checkVideo(src, cb) {
     const x = new XMLHttpRequest();
