@@ -306,7 +306,7 @@
     /* REEL */
     .reel-section {
       padding: 30px 0 60px;
-      scroll-margin-top: calc(var(--nav-h) + 8px);
+      scroll-margin-top: var(--nav-h);
     }
     .reel-container {
       position: relative;
@@ -321,14 +321,72 @@
     }
     @media (max-width: 480px) {
       .reel-section {
-        padding: 10px 0 24px;
+        padding: 0;
+        height: calc(100dvh - var(--nav-h));
+        min-height: calc(100dvh - var(--nav-h));
+        scroll-margin-top: var(--nav-h);
+      }
+      .reel-section .section-header {
+        display: none;
       }
       .reel-container {
-        height: calc(100dvh - var(--nav-h) - 16px);
+        height: 100%;
         max-width: 100%;
-        margin: 0 12px;
-        border-radius: 22px;
+        margin: 0;
+        border-radius: 0;
+        border: none;
       }
+    }
+    .reel-top-bar {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    .reel-top-tag { color: var(--gold2); }
+    .reel-top-divider { color: rgba(255,255,255,0.3); }
+    .reel-top-title { color: var(--txt); }
+
+    .reel-nav-arrows {
+      position: absolute;
+      right: 12px;
+      top: 14px;
+      z-index: 5;
+      display: flex;
+      gap: 6px;
+    }
+    .reel-nav-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .reel-nav-arrow:hover {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
     }
     .reel-viewport {
       height: 100%;
@@ -608,6 +666,18 @@
       </div>
 
       <div class="reel-container">
+        <!-- Floating Header Inside Reel -->
+        <div class="reel-top-bar">
+          <span class="reel-top-tag" data-i18n="reel_tag">🎬 Highlights</span>
+          <span class="reel-top-divider">•</span>
+          <span class="reel-top-title" data-i18n="reel_title">See It Live</span>
+        </div>
+
+        <div class="reel-nav-arrows">
+          <button class="reel-nav-arrow" onclick="prevReel()" aria-label="Previous Video" id="arrow-prev">▲</button>
+          <button class="reel-nav-arrow" onclick="nextReel()" aria-label="Next Video" id="arrow-next">▼</button>
+        </div>
+
         <div class="reel-progress" id="reel-progress">
           <div class="reel-progress-seg active" id="prog-0" onclick="goToReel(0)"><div class="reel-progress-seg-fill"></div></div>
           <div class="reel-progress-seg" id="prog-1" onclick="goToReel(1)"><div class="reel-progress-seg-fill"></div></div>
@@ -1026,6 +1096,43 @@
   function goToReel(idx) {
     const vp = document.getElementById('reel-viewport');
     vp.scrollTo({top: idx * vp.clientHeight, behavior: 'smooth'});
+  }
+
+  function nextReel() {
+    if (currentReel < REEL_COUNT - 1) goToReel(currentReel + 1);
+  }
+
+  function prevReel() {
+    if (currentReel > 0) goToReel(currentReel - 1);
+  }
+
+  // Prevent inner switching when reel is not fully in view
+  const reelContainer = document.querySelector('.reel-container');
+  const reelSection = document.getElementById('reels');
+  let reelFullyVisible = false;
+
+  const reelVisibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      reelFullyVisible = entry.intersectionRatio >= 0.72;
+      if (reelFullyVisible) {
+        vp.style.overflowY = 'scroll';
+      } else {
+        vp.style.overflowY = 'hidden';
+      }
+    });
+  }, {
+    threshold: [0.2, 0.72]
+  });
+
+  if (reelContainer) reelVisibilityObserver.observe(reelContainer);
+
+  // If user touches reel while it's partially off screen, snap the page into place
+  if (reelContainer) {
+    reelContainer.addEventListener('touchstart', () => {
+      if (!reelFullyVisible) {
+        reelSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, { passive: true });
   }
 
   // Precision slide centering & playback observer
