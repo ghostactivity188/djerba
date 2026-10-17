@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Djerba Experience – Discover island tours, pirate boats and desert excursions. Book via WhatsApp." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>Djerba Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:    #f0a500;
+      --gold2:   #ffcf60;
+      --teal:    #00c9a7;
+      --deep:    #0a0a0f;
+      --surface: #13131a;
+      --surface2:#1c1c28;
+      --glass:   rgba(255,255,255,0.06);
+      --border:  rgba(255,255,255,0.10);
+      --txt:     #f0ede8;
+      --txt2:    #a09a90;
+      --radius:  18px;
+      --nav-h:   64px;
+      --lang-h:  48px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--deep);
+      color: var(--txt);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; object-fit: cover; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--deep); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px;
+    }
+    .nav-logo span { background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* LANG BAR */
+    .lang-bar {
+      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
+      height: var(--lang-h);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      background: rgba(10,10,15,0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 16px; border-radius: 50px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--txt2); font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.5px;
+    }
+    .lang-btn .flag { font-size: 1.1rem; }
+    .lang-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #1a1000; border-color: transparent;
+      box-shadow: 0 0 16px rgba(240,165,0,0.4);
+    }
+    .lang-btn:not(.active):hover { border-color: var(--gold); color: var(--gold); }
+
+    /* MAIN */
+    main { padding-top: calc(var(--nav-h) + var(--lang-h)); }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 92vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 60px 24px 80px; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(240,165,0,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0,201,167,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 100%, rgba(240,165,0,0.08) 0%, transparent 60%),
+        linear-gradient(180deg, #0a0a0f 0%, #0e0e18 100%);
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.35; animation: float 8s ease-in-out infinite;
+    }
+    .hero-orb.orb1 { width: 280px; height: 280px; background: radial-gradient(circle, var(--gold), transparent); top: -60px; left: -80px; animation-delay: 0s; }
+    .hero-orb.orb2 { width: 220px; height: 220px; background: radial-gradient(circle, var(--teal), transparent); bottom: 40px; right: -60px; animation-delay: -4s; }
+    @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.08)} }
+
+    .hero-content { position: relative; z-index: 1; max-width: 400px; }
+    .hero-badge {
+      display: inline-block; padding: 6px 18px; border-radius: 50px;
+      border: 1px solid rgba(240,165,0,0.4); background: rgba(240,165,0,0.08);
+      font-size: 0.75rem; font-weight: 600; color: var(--gold);
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 8vw, 3.2rem); font-weight: 900;
+      line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 50%, #ff9a3c 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1rem; line-height: 1.7; color: var(--txt2);
+      margin-bottom: 36px; animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 32px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--gold), #ff9a3c);
+      color: #1a0e00; font-weight: 700; font-size: 1rem;
+      border: none; cursor: pointer;
+      box-shadow: 0 8px 32px rgba(240,165,0,0.35);
+      transition: all 0.3s ease; animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-cta:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(240,165,0,0.5); }
+    .scroll-hint {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--txt2); font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite; z-index: 1;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SECTION HEADER */
+    .section-header { text-align: center; padding: 0 20px 32px; }
+    .section-tag {
+      display: inline-block; padding: 4px 14px; border-radius: 50px;
+      background: rgba(240,165,0,0.12); border: 1px solid rgba(240,165,0,0.3);
+      color: var(--gold); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+
+    /* ACTIVITIES */
+    .activities { padding: 60px 0; }
+    .activities-grid { display: flex; flex-direction: column; gap: 28px; padding: 0 20px; }
+
+    /* CARD */
+    .activity-card {
+      border-radius: 24px; overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      opacity: 0; transform: translateY(40px);
+    }
+    .activity-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .activity-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .card-image-wrap { position: relative; height: 240px; overflow: hidden; }
+    .card-image-wrap img { height: 100%; transition: transform 0.5s ease; }
+    .activity-card:hover .card-image-wrap img { transform: scale(1.05); }
+    .card-image-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(10,10,15,0.85) 100%); }
+    .card-icon {
+      position: absolute; top: 16px; right: 16px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(10,10,15,0.6); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; border: 1px solid var(--border);
+    }
+    .card-number {
+      position: absolute; bottom: 16px; left: 16px;
+      font-size: 3rem; font-weight: 900; line-height: 1;
+      color: rgba(255,255,255,0.15);
+    }
+    .card-body { padding: 20px 20px 24px; }
+    .card-label {
+      display: inline-block; padding: 3px 12px; border-radius: 50px;
+      background: rgba(240,165,0,0.12); border: 1px solid rgba(240,165,0,0.25);
+      color: var(--gold); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .card-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 8px; line-height: 1.2; }
+    .card-desc { font-size: 0.88rem; line-height: 1.65; color: var(--txt2); margin-bottom: 20px; }
+    .card-cta {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 14px 20px; border-radius: 14px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff; font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem; font-weight: 700; border: none; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.25);
+      transition: all 0.3s ease;
+    }
+    .card-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,211,102,0.4); }
+
+    /* DIVIDER */
+    .divider { margin: 0 20px; border: none; border-top: 1px solid var(--border); }
+
+    /* REEL */
+    .reel-section { padding: 60px 0; }
+    .reel-container { position: relative; height: 80vh; max-height: 620px; overflow: hidden; }
+    .reel-viewport {
+      height: 100%; overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .reel-viewport::-webkit-scrollbar { display: none; }
+    .reel-slide {
+      height: 100%; width: 100%; scroll-snap-align: start;
+      position: relative; overflow: hidden; background: #000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .reel-slide video, .reel-slide .reel-placeholder {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    }
+    .reel-placeholder {
+      background-size: cover; background-position: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .reel-placeholder-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.65)); }
+    .reel-placeholder-icon {
+      font-size: 4rem; z-index: 1; text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      animation: pulseIcon 2s ease-in-out infinite;
+    }
+    @keyframes pulseIcon { 0%,100%{transform:scale(1);opacity:0.9} 50%{transform:scale(1.1);opacity:1} }
+    .reel-overlay {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(to bottom, transparent 30%, rgba(10,10,15,0.7) 100%);
+    }
+    .reel-info {
+      position: absolute; bottom: 0; left: 0; right: 60px;
+      z-index: 3; padding: 20px 18px;
+    }
+    .reel-activity-tag {
+      display: inline-block; padding: 3px 12px; border-radius: 50px;
+      background: rgba(240,165,0,0.2); border: 1px solid rgba(240,165,0,0.5);
+      color: var(--gold2); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .reel-title { font-size: 1.3rem; font-weight: 800; line-height: 1.2; margin-bottom: 6px; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
+    .reel-desc { font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.5; margin-bottom: 12px; text-shadow: 0 1px 6px rgba(0,0,0,0.8); }
+    .reel-book-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 50px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff; font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem; font-weight: 700; border: none; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: all 0.3s ease;
+    }
+    .reel-book-btn:hover { transform: scale(1.05); }
+    .reel-actions {
+      position: absolute; right: 10px; bottom: 20px; z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: 18px;
+    }
+    .reel-action-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: none; border: none; cursor: pointer; color: #fff;
+    }
+    .reel-action-btn .btn-circle {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.25s ease;
+    }
+    .reel-action-btn:hover .btn-circle { background: rgba(255,255,255,0.25); transform: scale(1.1); }
+    .reel-action-btn span { font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.75); }
+    .reel-dots {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      z-index: 3; display: flex; flex-direction: column; gap: 6px;
+    }
+    .reel-dot { width: 4px; height: 28px; border-radius: 2px; background: rgba(255,255,255,0.25); transition: all 0.3s ease; }
+    .reel-dot.active { background: var(--gold); height: 40px; }
+    .reel-progress {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 4;
+      display: flex; gap: 4px; padding: 10px 12px;
+    }
+    .reel-progress-seg { flex: 1; height: 2px; border-radius: 1px; background: rgba(255,255,255,0.25); overflow: hidden; }
+    .reel-progress-seg-fill { height: 100%; width: 0%; background: var(--gold2); transition: width 0.1s linear; }
+    .reel-progress-seg.done .reel-progress-seg-fill { width: 100%; }
+    .reel-progress-seg.active .reel-progress-seg-fill { animation: progressFill 6s linear forwards; }
+    @keyframes progressFill { from{width:0%} to{width:100%} }
+    .video-upload-hint {
+      text-align: center; padding: 16px 20px;
+      background: rgba(240,165,0,0.06); border-top: 1px solid rgba(240,165,0,0.15);
+    }
+    .video-upload-hint p { font-size: 0.75rem; color: var(--txt2); line-height: 1.6; }
+    .video-upload-hint strong { color: var(--gold); }
+    code { font-size: 0.75rem; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; }
+
+    /* FOOTER */
+    footer { padding: 40px 20px 36px; text-align: center; border-top: 1px solid var(--border); background: var(--surface); }
+    .footer-logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .footer-logo span { background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .footer-tagline { font-size: 0.82rem; color: var(--txt2); margin-bottom: 24px; }
+    .footer-wa {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px; border-radius: 50px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff; font-weight: 700; font-size: 0.9rem;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.3);
+      transition: all 0.3s ease; margin-bottom: 24px; display: block; margin: 0 auto 24px;
+      width: fit-content;
+    }
+    .footer-wa:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,211,102,0.45); }
+    .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+
+    /* TRANSITION */
+    .lang-transition { transition: opacity 0.22s ease; }
+    .lang-transition.fading { opacity: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <span>🌴</span>
+      <span data-i18n="brand">Djerba Experience</span>
+    </div>
+    <a id="nav-wa-btn" href="https://wa.me/21628322011" target="_blank" rel="noopener" aria-label="WhatsApp"
+       style="font-size:1.6rem; transition:transform 0.2s;"
+       onmouseenter="this.style.transform='scale(1.15)'"
+       onmouseleave="this.style.transform='scale(1)'">💬</a>
+  </nav>
+
+  <!-- LANGUAGE BAR -->
+  <div class="lang-bar" role="navigation" aria-label="Language switcher">
+    <button class="lang-btn" id="btn-fr" onclick="setLang('fr')" aria-label="Francais"><span class="flag">🇫🇷</span> FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-label="English"><span class="flag">🇬🇧</span> EN</button>
+    <button class="lang-btn" id="btn-de" onclick="setLang('de')" aria-label="Deutsch"><span class="flag">🇩🇪</span> DE</button>
+  </div>
+
+  <!-- MAIN -->
+  <main class="lang-transition" id="main-content">
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-orb orb1"></div>
+      <div class="hero-orb orb2"></div>
+      <div class="hero-content">
+        <div class="hero-badge" data-i18n="hero_badge">🏝️ Djerba, Tunisia</div>
+        <h1 class="hero-title">
+          <span data-i18n="hero_title_1">Discover the</span><br/>
+          <span class="gradient-text" data-i18n="hero_title_2">Magic of Djerba</span>
+        </h1>
+        <p class="hero-desc" data-i18n="hero_desc">Welcome to Djerba! Discover the treasures of our beautiful island, its culture, history, and must-see attractions.</p>
+        <button class="hero-cta" onclick="scrollToActivities()" id="hero-cta-btn">
+          <span>✨</span> <span data-i18n="hero_cta">Explore Activities</span>
+        </button>
+      </div>
+      <div class="scroll-hint">
+        <span data-i18n="scroll">Scroll</span>
+        <span>↓</span>
+      </div>
+    </section>
+
+    <!-- ACTIVITIES -->
+    <section class="activities" id="activities">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="act_tag">Our Experiences</div>
+        <h2 class="section-title" data-i18n="act_title">Choose Your Adventure</h2>
+      </div>
+      <div class="activities-grid">
+
+        <!-- Card 1 -->
+        <article class="activity-card" id="card-tour">
+          <div class="card-image-wrap">
+            <img src="images/tour_ile.jpg" alt="Tour de l'ile Djerba" loading="lazy" />
+            <div class="card-image-overlay"></div>
+            <div class="card-icon">🗺️</div>
+            <div class="card-number">01</div>
+          </div>
+          <div class="card-body">
+            <div class="card-label" data-i18n="act1_tag">Island Tour</div>
+            <h3 class="card-title" data-i18n="act1_title">Tour de l'Île</h3>
+            <p class="card-desc" data-i18n="act1_desc">Embark on a full island circuit and uncover Djerba's hidden gems — ancient mosques, turquoise coves, colourful souks and the iconic lighthouse. An unforgettable journey around paradise.</p>
+            <button class="card-cta" onclick="bookWhatsApp('Tour de l\u0027Île')" id="book-btn-tour">
+              <span>💬</span> <span data-i18n="book_btn">Book via WhatsApp</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="activity-card" id="card-pirates">
+          <div class="card-image-wrap">
+            <img src="images/bateaux_pirates.jpg" alt="Bateaux Pirates Djerba" loading="lazy" />
+            <div class="card-image-overlay"></div>
+            <div class="card-icon">🏴‍☠️</div>
+            <div class="card-number">02</div>
+          </div>
+          <div class="card-body">
+            <div class="card-label" data-i18n="act2_tag">Sea Adventure</div>
+            <h3 class="card-title" data-i18n="act2_title">Bateaux Pirates</h3>
+            <p class="card-desc" data-i18n="act2_desc">Set sail on an authentic pirate ship and conquer the sparkling Mediterranean. Music, fun, swimming stops and a legendary sunset cruise — the ultimate adventure for the whole family.</p>
+            <button class="card-cta" onclick="bookWhatsApp('Bateaux Pirates')" id="book-btn-pirates">
+              <span>💬</span> <span data-i18n="book_btn">Book via WhatsApp</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="activity-card" id="card-desert">
+          <div class="card-image-wrap">
+            <img src="images/excursion_desert.jpg" alt="Excursion Desert Djerba" loading="lazy" />
+            <div class="card-image-overlay"></div>
+            <div class="card-icon">🐪</div>
+            <div class="card-number">03</div>
+          </div>
+          <div class="card-body">
+            <div class="card-label" data-i18n="act3_tag">Desert Adventure</div>
+            <h3 class="card-title" data-i18n="act3_title">Excursion Désert</h3>
+            <p class="card-desc" data-i18n="act3_desc">Venture into the heart of the Sahara on camelback and discover an ancient world of golden dunes, Berber villages and star-filled skies. A soul-stirring journey you'll never forget.</p>
+            <button class="card-cta" onclick="bookWhatsApp('Excursion D\u00e9sert')" id="book-btn-desert">
+              <span>💬</span> <span data-i18n="book_btn">Book via WhatsApp</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- REELS -->
+    <section class="reel-section" id="reels">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="reel_tag">🎬 Highlights</div>
+        <h2 class="section-title" data-i18n="reel_title">See It Live</h2>
+      </div>
+
+      <div class="reel-container">
+        <div class="reel-progress" id="reel-progress">
+          <div class="reel-progress-seg active" id="prog-0"><div class="reel-progress-seg-fill"></div></div>
+          <div class="reel-progress-seg" id="prog-1"><div class="reel-progress-seg-fill"></div></div>
+          <div class="reel-progress-seg" id="prog-2"><div class="reel-progress-seg-fill"></div></div>
+        </div>
+        <div class="reel-dots">
+          <div class="reel-dot active" data-idx="0"></div>
+          <div class="reel-dot" data-idx="1"></div>
+          <div class="reel-dot" data-idx="2"></div>
+        </div>
+
+        <div class="reel-viewport" id="reel-viewport">
+
+          <!-- Reel 1 -->
+          <div class="reel-slide" id="reel-0">
+            <video id="vid-0" src="videos/tour_ile.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <div class="reel-placeholder" id="ph-0" style="background-image:url('images/tour_ile.jpg')">
+              <div class="reel-placeholder-overlay"></div>
+              <div class="reel-placeholder-icon">▶️</div>
+            </div>
+            <div class="reel-overlay"></div>
+            <div class="reel-info">
+              <div class="reel-activity-tag" data-i18n="act1_tag">Island Tour</div>
+              <div class="reel-title" data-i18n="act1_title">Tour de l'Île</div>
+              <div class="reel-desc" data-i18n="reel1_desc">Discover every corner of this magical island.</div>
+              <button class="reel-book-btn" onclick="bookWhatsApp('Tour de l\u0027Île')" id="reel-book-0">
+                <span>💬</span> <span data-i18n="book_short">Book Now</span>
+              </button>
+            </div>
+            <div class="reel-actions">
+              <button class="reel-action-btn" onclick="toggleMute(0)" id="mute-btn-0">
+                <div class="btn-circle" id="mute-icon-0">🔇</div>
+                <span data-i18n="sound">Sound</span>
+              </button>
+              <button class="reel-action-btn" onclick="bookWhatsApp('Tour de l\u0027Île')">
+                <div class="btn-circle">💬</div>
+                <span data-i18n="book_short">Book</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Reel 2 -->
+          <div class="reel-slide" id="reel-1">
+            <video id="vid-1" src="videos/bateaux_pirates.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <div class="reel-placeholder" id="ph-1" style="background-image:url('images/bateaux_pirates.jpg')">
+              <div class="reel-placeholder-overlay"></div>
+              <div class="reel-placeholder-icon">▶️</div>
+            </div>
+            <div class="reel-overlay"></div>
+            <div class="reel-info">
+              <div class="reel-activity-tag" data-i18n="act2_tag">Sea Adventure</div>
+              <div class="reel-title" data-i18n="act2_title">Bateaux Pirates</div>
+              <div class="reel-desc" data-i18n="reel2_desc">Sail the Mediterranean on a legendary pirate ship.</div>
+              <button class="reel-book-btn" onclick="bookWhatsApp('Bateaux Pirates')" id="reel-book-1">
+                <span>💬</span> <span data-i18n="book_short">Book Now</span>
+              </button>
+            </div>
+            <div class="reel-actions">
+              <button class="reel-action-btn" onclick="toggleMute(1)" id="mute-btn-1">
+                <div class="btn-circle" id="mute-icon-1">🔇</div>
+                <span data-i18n="sound">Sound</span>
+              </button>
+              <button class="reel-action-btn" onclick="bookWhatsApp('Bateaux Pirates')">
+                <div class="btn-circle">💬</div>
+                <span data-i18n="book_short">Book</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Reel 3 -->
+          <div class="reel-slide" id="reel-2">
+            <video id="vid-2" src="videos/excursion_desert.mp4" loop muted playsinline style="display:none" preload="none"></video>
+            <div class="reel-placeholder" id="ph-2" style="background-image:url('images/excursion_desert.jpg')">
+              <div class="reel-placeholder-overlay"></div>
+              <div class="reel-placeholder-icon">▶️</div>
+            </div>
+            <div class="reel-overlay"></div>
+            <div class="reel-info">
+              <div class="reel-activity-tag" data-i18n="act3_tag">Desert Adventure</div>
+              <div class="reel-title" data-i18n="act3_title">Excursion Désert</div>
+              <div class="reel-desc" data-i18n="reel3_desc">Golden dunes, camels and a sky full of stars.</div>
+              <button class="reel-book-btn" onclick="bookWhatsApp('Excursion D\u00e9sert')" id="reel-book-2">
+                <span>💬</span> <span data-i18n="book_short">Book Now</span>
+              </button>
+            </div>
+            <div class="reel-actions">
+              <button class="reel-action-btn" onclick="toggleMute(2)" id="mute-btn-2">
+                <div class="btn-circle" id="mute-icon-2">🔇</div>
+                <span data-i18n="sound">Sound</span>
+              </button>
+              <button class="reel-action-btn" onclick="bookWhatsApp('Excursion D\u00e9sert')">
+                <div class="btn-circle">💬</div>
+                <span data-i18n="book_short">Book</span>
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /reel-viewport -->
+      </div><!-- /reel-container -->
+
+      <div class="video-upload-hint">
+        <p data-i18n="video_hint">📁 <strong>Add your videos:</strong> Drop MP4 files in the <strong>videos/</strong> folder named <code>tour_ile.mp4</code>, <code>bateaux_pirates.mp4</code>, <code>excursion_desert.mp4</code></p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">🌴 <span>Djerba Experience</span></div>
+      <p class="footer-tagline" data-i18n="footer_tagline">Your island adventure starts here</p>
+      <a class="footer-wa" href="https://wa.me/21628322011" target="_blank" rel="noopener" id="footer-wa-link">
+        <span>💬</span> <span>+216 28 322 011</span>
+      </a>
+      <p class="footer-copy">© 2025 Djerba Experience. All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <script>
+  // ── TRANSLATIONS ─────────────────────────────────────────────────
+  const i18n = {
+    en: {
+      brand:'Djerba Experience', hero_badge:'🏝️ Djerba, Tunisia',
+      hero_title_1:'Discover the', hero_title_2:'Magic of Djerba',
+      hero_desc:'Welcome to Djerba! Discover the treasures of our beautiful island, its culture, history, and must-see attractions.',
+      hero_cta:'Explore Activities', scroll:'Scroll',
+      act_tag:'Our Experiences', act_title:'Choose Your Adventure',
+      act1_tag:'Island Tour', act1_title:"Tour de l'Île",
+      act1_desc:"Embark on a full island circuit and uncover Djerba's hidden gems — ancient mosques, turquoise coves, colourful souks and the iconic lighthouse. An unforgettable journey around paradise.",
+      act2_tag:'Sea Adventure', act2_title:'Bateaux Pirates',
+      act2_desc:'Set sail on an authentic pirate ship and conquer the sparkling Mediterranean. Music, fun, swimming stops and a legendary sunset cruise — the ultimate adventure for the whole family.',
+      act3_tag:'Desert Adventure', act3_title:'Excursion Désert',
+      act3_desc:"Venture into the heart of the Sahara on camelback and discover golden dunes, Berber villages and star-filled skies. A soul-stirring journey you'll never forget.",
+      book_btn:'Book via WhatsApp', book_short:'Book Now',
+      reel_tag:'🎬 Highlights', reel_title:'See It Live',
+      reel1_desc:'Discover every corner of this magical island.',
+      reel2_desc:'Sail the Mediterranean on a legendary pirate ship.',
+      reel3_desc:'Golden dunes, camels and a sky full of stars.',
+      sound:'Sound',
+      video_hint:'📁 Add your videos: Drop MP4 files in the videos/ folder named tour_ile.mp4, bateaux_pirates.mp4, excursion_desert.mp4',
+      footer_tagline:'Your island adventure starts here',
+      wa_prefix:"Hello, I'd like to book: "
+    },
+    fr: {
+      brand:'Djerba Experience', hero_badge:'🏝️ Djerba, Tunisie',
+      hero_title_1:'Découvrez la', hero_title_2:'Magie de Djerba',
+      hero_desc:'Bienvenue à Djerba ! Découvrez les trésors de notre magnifique île, sa culture, son histoire et ses lieux incontournables.',
+      hero_cta:'Explorer les Activités', scroll:'Défiler',
+      act_tag:'Nos Expériences', act_title:'Choisissez Votre Aventure',
+      act1_tag:"Tour de l'île", act1_title:"Tour de l'Île",
+      act1_desc:"Partez pour un circuit complet de l'île et découvrez les joyaux cachés de Djerba — mosquées anciennes, criques turquoise, souks colorés et le phare emblématique. Un voyage inoubliable autour du paradis.",
+      act2_tag:'Aventure en Mer', act2_title:'Bateaux Pirates',
+      act2_desc:"Prenez la mer à bord d'un authentique bateau pirate et conquérez la Méditerranée scintillante. Musique, fun, baignades et croisière coucher de soleil légendaire — l'aventure ultime pour toute la famille.",
+      act3_tag:'Aventure Désert', act3_title:'Excursion Désert',
+      act3_desc:"Partez au cœur du Sahara à dos de chameau et découvrez un monde ancestral de dunes dorées, villages berbères et cieux étoilés. Un voyage qui touche l'âme.",
+      book_btn:'Réserver via WhatsApp', book_short:'Réserver',
+      reel_tag:'🎬 Highlights', reel_title:'Voyez en Direct',
+      reel1_desc:'Découvrez chaque recoin de cette île magique.',
+      reel2_desc:'Naviguez en Méditerranée sur un bateau pirate légendaire.',
+      reel3_desc:"Dunes dorées, chameaux et un ciel plein d'étoiles.",
+      sound:'Son',
+      video_hint:'📁 Ajoutez vos vidéos : Déposez vos MP4 dans le dossier videos/ nommés tour_ile.mp4, bateaux_pirates.mp4, excursion_desert.mp4',
+      footer_tagline:'Votre aventure insulaire commence ici',
+      wa_prefix:"Bonjour, je voudrais réserver : "
+    },
+    de: {
+      brand:'Djerba Experience', hero_badge:'🏝️ Djerba, Tunesien',
+      hero_title_1:'Entdecken Sie die', hero_title_2:'Magie Djerbas',
+      hero_desc:'Willkommen auf Djerba! Entdecken Sie die Schätze unserer wunderschönen Insel, ihre Kultur, Geschichte und schönsten Sehenswürdigkeiten.',
+      hero_cta:'Aktivitäten Entdecken', scroll:'Scrollen',
+      act_tag:'Unsere Erlebnisse', act_title:'Wählen Sie Ihr Abenteuer',
+      act1_tag:'Inselrundfahrt', act1_title:"Tour de l'Île",
+      act1_desc:'Begeben Sie sich auf eine vollständige Inselrundfahrt und entdecken Sie Djerbas versteckte Schätze — uralte Moscheen, türkisfarbene Buchten, bunte Souks und den ikonischen Leuchtturm.',
+      act2_tag:'Seeabenteuer', act2_title:'Bateaux Pirates',
+      act2_desc:'Stechen Sie auf einem authentischen Piratenschiff in See und erobern Sie das funkelnde Mittelmeer. Musik, Spaß, Badeaufenthalte und eine legendäre Sonnenuntergangskreuzfahrt.',
+      act3_tag:'Wüstenabenteuer', act3_title:'Excursion Désert',
+      act3_desc:'Reiten Sie auf einem Kamel ins Herz der Sahara und entdecken Sie goldene Dünen, Berberdörfer und einen Sternenhimmel. Eine unvergessliche Reise für die Seele.',
+      book_btn:'Per WhatsApp buchen', book_short:'Buchen',
+      reel_tag:'🎬 Highlights', reel_title:'Live erleben',
+      reel1_desc:'Entdecken Sie jede Ecke dieser magischen Insel.',
+      reel2_desc:'Segeln Sie auf einem legendären Piratenschiff übers Mittelmeer.',
+      reel3_desc:'Goldene Dünen, Kamele und ein Sternenhimmel.',
+      sound:'Ton',
+      video_hint:'📁 Ihre Videos: MP4-Dateien in videos/ ablegen: tour_ile.mp4, bateaux_pirates.mp4, excursion_desert.mp4',
+      footer_tagline:'Ihr Inselabenteuer beginnt hier',
+      wa_prefix:'Hallo, ich möchte buchen: '
+    }
+  };
+
+  // ── LANGUAGE ─────────────────────────────────────────────────────
+  let currentLang = 'en';
+
+  function detectLang() {
+    const saved = localStorage.getItem('djerba_lang');
+    if (saved && i18n[saved]) return saved;
+    const nav = (navigator.language || 'en').toLowerCase().slice(0,2);
+    return i18n[nav] ? nav : 'en';
+  }
+
+  function setLang(lang) {
+    if (!i18n[lang] || lang === currentLang) return;
+    const main = document.getElementById('main-content');
+    main.classList.add('fading');
+    setTimeout(() => {
+      currentLang = lang;
+      localStorage.setItem('djerba_lang', lang);
+      applyTranslations();
+      updateLangButtons();
+      main.classList.remove('fading');
+    }, 220);
+  }
+
+  function applyTranslations() {
+    const t = i18n[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (t[k] !== undefined) el.textContent = t[k];
+    });
+    document.documentElement.lang = currentLang;
+  }
+
+  function updateLangButtons() {
+    ['en','fr','de'].forEach(l => {
+      document.getElementById('btn-'+l).classList.toggle('active', l === currentLang);
+    });
+  }
+
+  // ── WHATSAPP ─────────────────────────────────────────────────────
+  const WA = '21628322011';
+  function bookWhatsApp(activity) {
+    const msg = encodeURIComponent(i18n[currentLang].wa_prefix + activity);
+    window.open('https://wa.me/'+WA+'?text='+msg, '_blank', 'noopener');
+  }
+  function scrollToActivities() {
+    document.getElementById('activities').scrollIntoView({behavior:'smooth'});
+  }
+
+  // ── CARD ANIMATIONS ───────────────────────────────────────────────
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {threshold: 0.15});
+  document.querySelectorAll('.activity-card').forEach((c,i) => {
+    c.style.transitionDelay = (i*0.12)+'s';
+    obs.observe(c);
+  });
+
+  // ── REEL LOGIC ───────────────────────────────────────────────────
+  const REEL_COUNT = 3;
+  let currentReel = 0;
+  const muteStates = [true, true, true];
+
+  function checkVideo(src, cb) {
+    const x = new XMLHttpRequest();
+    x.open('HEAD', src, true);
+    x.onload  = () => cb(x.status === 200);
+    x.onerror = () => cb(false);
+    x.send();
+  }
+
+  function initReels() {
+    for (let i = 0; i < REEL_COUNT; i++) {
+      const vid = document.getElementById('vid-'+i);
+      const ph  = document.getElementById('ph-'+i);
+      const idx = i;
+      checkVideo(vid.src, (exists) => {
+        if (exists) {
+          vid.style.display = 'block';
+          ph.style.display  = 'none';
+          if (idx === 0) { vid.muted = true; vid.play().catch(()=>{}); }
+        }
+      });
+    }
+    updateProgress(0);
+  }
+
+  function playReel(idx) {
+    for (let i = 0; i < REEL_COUNT; i++) {
+      const vid = document.getElementById('vid-'+i);
+      if (i === idx) {
+        if (vid.style.display !== 'none') {
+          vid.muted = muteStates[i];
+          vid.play().catch(()=>{});
+        }
+      } else {
+        vid.pause();
+      }
+    }
+    currentReel = idx;
+    updateProgress(idx);
+    updateDots(idx);
+  }
+
+  function updateDots(idx) {
+    document.querySelectorAll('.reel-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+  }
+
+  function updateProgress(idx) {
+    for (let i = 0; i < REEL_COUNT; i++) {
+      const seg = document.getElementById('prog-'+i);
+      seg.classList.remove('active','done');
+      if (i < idx) seg.classList.add('done');
+      if (i === idx) seg.classList.add('active');
+    }
+  }
+
+  function toggleMute(idx) {
+    muteStates[idx] = !muteStates[idx];
+    const vid  = document.getElementById('vid-'+idx);
+    const icon = document.getElementById('mute-icon-'+idx);
+    vid.muted  = muteStates[idx];
+    icon.textContent = muteStates[idx] ? '🔇' : '🔊';
+  }
+
+  // Scroll detection
+  const vp = document.getElementById('reel-viewport');
+  let st = null;
+  vp.addEventListener('scroll', () => {
+    clearTimeout(st);
+    st = setTimeout(() => {
+      const idx = Math.round(vp.scrollTop / vp.clientHeight);
+      if (idx !== currentReel) playReel(idx);
+    }, 80);
+  }, {passive:true});
+
+  // Touch swipe
+  let ty = 0;
+  vp.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, {passive:true});
+  vp.addEventListener('touchend', e => {
+    const dy = ty - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 40) {
+      const next = dy > 0 ? Math.min(currentReel+1, REEL_COUNT-1) : Math.max(currentReel-1, 0);
+      vp.scrollTo({top: next * vp.clientHeight, behavior:'smooth'});
+    }
+  }, {passive:true});
+
+  // ── INIT ─────────────────────────────────────────────────────────
+  (function init() {
+    currentLang = detectLang();
+    applyTranslations();
+    updateLangButtons();
+    initReels();
+  })();
+  </script>
+</body>
+</html>
